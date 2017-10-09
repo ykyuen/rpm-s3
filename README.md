@@ -1,3 +1,9 @@
+# (Forked) rpm-s3
+
+This forked repository modified the aws s3 host url to google cloud storage such that we could use gcs as the yum repository.
+
+---
+
 # rpm-s3
 
 This small tool allows you to maintain YUM repositories of RPM packages on S3. The code is largely derived from [s3yum-updater](https://github.com/rockpack/s3yum-updater).
