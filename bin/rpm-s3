@@ -14,6 +14,23 @@ import yum
 import boto
 import subprocess
 
+#######################################################################
+# Monkey patch for the bucket name with dots problem                  #
+# Ref: https://github.com/boto/boto/issues/2836#issuecomment-68682573 #
+##################################################################### #
+import ssl
+
+_old_match_hostname = ssl.match_hostname
+
+def _new_match_hostname(cert, hostname):
+   if hostname.endswith('.storage.googleapis.com'):
+        pos = hostname.find('.storage.googleapis.com')
+        hostname = hostname[:pos].replace('.', '') + hostname[pos:]
+   return _old_match_hostname(cert, hostname)
+
+ssl.match_hostname = _new_match_hostname
+##################################################################### #
+
 lib_root = os.path.dirname(os.path.dirname(__file__))
 
 sys.path.insert(1, os.path.join(lib_root, "vendor/pexpect"))
